@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Digital | Mijael Quispe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Variables para colores */
+        :root {
+            --primary-color: #0077b5;
+            --secondary-color: #34495e;
+            --background-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --button-default-bg: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Partículas de fondo animadas */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Perfil --- */
+        .profile {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 119, 181, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0, 119, 181, 0.5);
+        }
+
+        /* Anillo animado alrededor de la foto */
+        .profile-img-container::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 200%;
+            animation: rotateGradient 3s linear infinite;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        @keyframes rotateGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: var(--text-color);
+            font-size: 1.9em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .job-title {
+            color: var(--secondary-color);
+            font-size: 1.1em;
+            margin-bottom: 35px;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        /* --- Sección de Enlaces --- */
+        .links-section h2 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            animation: fadeIn 1s ease-out 0.7s backwards;
+        }
+
+        .links-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            animation: expandWidth 1s ease-out 0.7s backwards;
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        /* Estilo Base de los Botones */
+        .link-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 18px 25px;
+            margin: 15px 0;
+            text-decoration: none;
+            color: var(--text-color);
+            background-color: var(--button-default-bg);
+            border-radius: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out backwards;
+        }
+
+        .link-btn:nth-child(1) { animation-delay: 0.9s; }
+        .link-btn:nth-child(2) { animation-delay: 1.1s; }
+        .link-btn:nth-child(3) { animation-delay: 1.3s; }
+        .link-btn:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Efecto de onda al hacer hover */
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .link-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .link-btn i {
+            margin-right: 15px;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .link-btn:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .link-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .link-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Estilo Específico para LinkedIn */
+        .linkedin-btn {
+            background: linear-gradient(135deg, #0077b5 0%, #005f99 100%);
+            color: white;
+        }
+
+        .linkedin-btn i {
+            color: white;
+        }
+
+        .linkedin-btn:hover {
+            background: linear-gradient(135deg, #005f99 0%, #004a7a 100%);
+        }
+
+        /* Colores para el resto de íconos */
+        .cv-btn i { color: #e74c3c; }
+        .portfolio-btn i { color: #f39c12; }
+        .blog-btn i { color: #2ecc71; }
+
+        /* Ajuste para móviles */
+        @media (max-width: 480px) {
+            .card-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .link-btn {
+                padding: 16px 20px;
+            }
+        }
+
+        /* Efecto de pulso para el botón de LinkedIn */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 119, 181, 0.7);
+            }
+            70% {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 0 10px rgba(0, 119, 181, 0);
+            }
+            100% {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 119, 181, 0);
+            }
+        }
+
+        .linkedin-btn {
+            animation: slideIn 0.6s ease-out 0.9s backwards, pulse 2s infinite 2s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+
+        <div class="profile">
+            <div class="profile-img-container">
+                <img src="yo.jpg" alt="Foto de Perfil" class="profile-img">
+            </div>
+            <h1>Mijael Sebastián Juy Quispe</h1>
+            <p class="job-title">Diseño y Desarrollo de Software</p>
+        </div>
+
+        <div class="links-section">
+            <h2>Enlaces Profesionales</h2>
+
+            <a href="https://www.linkedin.com/in/mijael-sebastian-juy-b17060334/" target="_blank" class="link-btn linkedin-btn">
+                <i class="fab fa-linkedin"></i> Perfil de LinkedIn
+            </a>
+
+            <a href="https://drive.google.com/file/d/1iNUXVLMwOyp0G4sk4MgLhpsrMCF1nTCS/view?usp=sharing" target="_blank" class="link-btn cv-btn">
+                <i class="fas fa-file-pdf"></i> Descargar CV
+            </a>
+
+            <a href="https://github.com/orgs/SillarInmobiliaria/repositories" target="_blank" class="link-btn portfolio-btn">
+                <i class="fas fa-laptop-code"></i> Portafolio / Proyectos
+            </a>
+
+            <a href="https://github.com/SillarInmobiliaria/SI-frontend" target="_blank" class="link-btn blog-btn">
+                <i class="fas fa-blog"></i> Blog Profesional
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
